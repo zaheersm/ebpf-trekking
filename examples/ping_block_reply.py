@@ -5,16 +5,29 @@ import sys;
 prog = """
 #include <bcc/proto.h>
 
-/* 
-There are better ways to get OFFSETs for e.g. by using macros from .h
-files of other networking subsystems
-*/
 #define IP_SRC_OFF 26
 #define IP_DST_OFF 30
 #define IP_CKSUM_OFF 24
+/*
+There are better ways to get OFFSETs for e.g. by using macros from .h
+files of other networking subsytems
+*/
+
+/* 
+struct icmp_t would come in handy for parsing ICMP packets,
+since bcc/proto.h doesn't specify a struct for parsing ICMP packets
+*/
+struct icmp_t {
+  unsigned char type;
+  unsigned char code;
+  unsigned short cksum;
+  /* Fields only valid for echo-reply ICMP message */
+  unsigned short id;
+  unsigned short seq;
+} BPF_PACKET_HEADER;
 
 int ping_block_reply (struct __sk_buff * skb) {
-	
+	test();
 	u8 *cursor = 0;
 	struct ethernet_t * ethernet = cursor_advance(cursor, sizeof(*ethernet));
 	switch (ethernet->type) {
