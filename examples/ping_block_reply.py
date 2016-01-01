@@ -30,12 +30,12 @@ struct icmp_t would come in handy for parsing ICMP packets,
 since bcc/proto.h doesn't specify a struct for parsing ICMP packets
 */
 struct icmp_t {
-  unsigned char type;
-  unsigned char code;
-  unsigned short cksum;
-  /* Fields only valid for echo-reply ICMP message */
-  unsigned short id;
-  unsigned short seq;
+	unsigned char type;
+	unsigned char code;
+	unsigned short cksum;
+	/* Fields only valid for echo-reply ICMP message */
+	unsigned short id;
+	unsigned short seq;
 } BPF_PACKET_HEADER;
 
 int ping_block_reply (struct __sk_buff * skb) {
