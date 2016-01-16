@@ -3,22 +3,24 @@
 This example is based on [BPF samples](https://github.com/torvalds/linux/tree/master/samples/bpf) in linux tree.
 
 A BPF module (module.c) counts the ICMP ping packets. Count is stored in a BPF 
-map. A user space program (master.c) loads the BPF module and attaches it and 
-pins the map. A separate user-space program (share.c) reads from the pinned map.
+map. A user space program (master.c) loads the BPF module, attaches it and 
+pins the map. A separate user-space program (share.c) reads from the pinned map 
+and removes/unpins the map.
 
 **module.c**: A BPF program written in restricted C. It checks if the packet is 
 an ICMP ping. If yes, it increments a counter. Counter is a bpf map of type 
 BPF_MAP_TYPE_HASH.
 
 **module.bpf**: An executable BPF program (module.c gets compiled into module.bpf 
-using LLVM bpf backend). You need to pass module.bpf to master.c
+using LLVM's bpf backend). You need to pass module.bpf to master.c
 
 **master.c**: A user space program which loads a bpf module, attaches it and pins 
 the map using bpf_obj_pin to /sys/fs/bpf/pc_map
 
 **share.c**: Another user space program which reads a value from the map pinned 
-by master.c. You need to pass /sys/fs/bpf/pc_map as argument to this program.
- 
+by master.c. You need to pass /sys/fs/bpf/pc_map as argument to this program. 
+Before exiting, it unpins/removes the map.
+
 #####Getting it up and running
 Make sure /sys/fs/bpf is mounted. This is where our map will be persisted.
 ```bash
@@ -42,7 +44,7 @@ Executing master
 ```bash
 sudo ./master module.bpf
 ```
-Executing share (without quitting master since master unlinks/unpins the map before exiting)
+Executing share (you can execute it even after quiting master)
 ```bash
 sudo ./share /sys/fs/bpf/pc_map
 ```

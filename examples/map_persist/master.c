@@ -32,7 +32,7 @@ int main (int ac, char **argv)
 		return -1;
 	}
 	
-	sock = open_raw_sock("eth0");
+	sock = open_raw_sock("lo");
 	
 	
 	assert(setsockopt(sock, SOL_SOCKET, SO_ATTACH_BPF, prog_fd,
@@ -42,6 +42,11 @@ int main (int ac, char **argv)
 	assert(bpf_obj_pin(map_fd[0],"/sys/fs/bpf/pc_map") == 0);
 	printf("MAP persisted to /sys/fs/bpf/pc_map\n");
 	
+	// Pinging to localhost
+	FILE * f = popen("ping -c5 localhost", "r");
+	(void) f; //Suppress unused variable warning from compiler
+
+	
 	long icmp_cnt = 0;
 	char q;
 	while (q != 'q') {
@@ -50,9 +55,5 @@ int main (int ac, char **argv)
 		q = getchar();
 	}
 	
-	printf("Deleting the map persisted earlier\n");
-	unlink("/sys/fs/bpf/pc_map");
-	sleep(1);
-
 	return 0;
 }

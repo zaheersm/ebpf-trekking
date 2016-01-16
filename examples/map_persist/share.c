@@ -2,6 +2,7 @@
 #include <linux/bpf.h>
 #include <arpa/inet.h>
 #include <assert.h>
+#include <unistd.h>
 
 #include "bpf/libbpf.h"
 
@@ -24,5 +25,10 @@ int main (int ac, char ** argv)
 	assert(bpf_lookup_elem(map_fd, &key, &value) == 0);
 	
 	printf("ICMP count: %ld\n", value);
+	
+	//Removing the map
+	printf("Removing map %s\n", argv[1]);
+	unlink(argv[1]);
+
 	return 0;
 }
