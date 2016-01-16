@@ -1,26 +1,26 @@
 #####Overview
 
-This example is based on samples provided here: https://github.com/torvalds/linux/tree/master/samples/bpf.
+This example is based on [BPF samples](https://github.com/torvalds/linux/tree/master/samples/bpf) in linux tree.
 
-A BPF module (module.c) counts the ICMP ping packets. Count is stored in a BPF map. A user space  
-program (master.c) loads the BPF module and attaches it and pins the map. A separate user-space program 
-reads from 
-the pinned map.
+A BPF module (module.c) counts the ICMP ping packets. Count is stored in a BPF 
+map. A user space program (master.c) loads the BPF module and attaches it and 
+pins the map. A separate user-space program (share.c) reads from the pinned map.
 
-module.c: A BPF program written in restricted C. It checks if the packet is an ICMP ping. If yes, it 
-increments a counter. Counter is a bpf map of type BPF_MAP_TYPE_HASH.
+**module.c**: A BPF program written in restricted C. It checks if the packet is 
+an ICMP ping. If yes, it increments a counter. Counter is a bpf map of type 
+BPF_MAP_TYPE_HASH.
 
-module.bpf: An executable BPF program (module.c gets compiled into module.bpf 
+**module.bpf**: An executable BPF program (module.c gets compiled into module.bpf 
 using LLVM bpf backend). You need to pass module.bpf to master.c
 
-master.c: A user space program which loads a bpf module, attaches it and pins the 
-map using bpf_obj_pin to /sys/fs/bpf/pc_map
+**master.c**: A user space program which loads a bpf module, attaches it and pins 
+the map using bpf_obj_pin to /sys/fs/bpf/pc_map
 
-share.c: Another user space program which reads a value from the map pinned 
+**share.c**: Another user space program which reads a value from the map pinned 
 by master.c. You need to pass /sys/fs/bpf/pc_map as argument to this program.
  
 #####Getting it up and running
-Make sure /sys/fs/bpf is mounted. This where our map will be persisted.
+Make sure /sys/fs/bpf is mounted. This is where our map will be persisted.
 ```bash
 mount | grep bpf
 ```
@@ -42,7 +42,12 @@ Executing master
 ```bash
 sudo ./master module.bpf
 ```
-Executing share (without quitting master)
+Executing share (without quitting master since master unlinks/unpins the map before exiting)
 ```bash
 sudo ./share /sys/fs/bpf/pc_map
 ```
+You need linux kernel version >= 4.4 to run this example. It make use of Kernel 
+headers which might not have been exported to use by user-space if you've updated 
+your Kernel. You can export your kernel headers by going through the [guide](https://www.kernel.org/doc/Documentation/kbuild/headers_install.txt)
+
+You can setup LLVM backend for ebpf by using the [script](https://gist.github.com/tuxology/357d8826e97eb72c9277) provided by [Suchakra Sharma](https://suchakra.wordpress.com/about/)
