@@ -48,6 +48,6 @@ sudo ./share /sys/fs/bpf/pc_map
 ```
 You need linux kernel version >= 4.4 to run this example. It make use of Kernel 
 headers which might not have been exported to use by user-space if you've updated 
-your Kernel. You can export your kernel headers by going through the [guide](https://www.kernel.org/doc/Documentation/kbuild/headers_install.txt)
+your Kernel. You can export your kernel headers by going through the [guide](https://www.kernel.org/doc/Documentation/kbuild/headers_install.txt).
 
-You can setup LLVM backend for ebpf by using the [script](https://gist.github.com/tuxology/357d8826e97eb72c9277) provided by [Suchakra Sharma](https://suchakra.wordpress.com/about/)
+You can setup LLVM backend for ebpf by using the [script](https://gist.github.com/tuxology/357d8826e97eb72c9277) provided by [Suchakra Sharma](https://suchakra.wordpress.com/about/).
