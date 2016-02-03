@@ -13,7 +13,11 @@
 
 int main (int ac, char **argv) 
 {
-
+	if (ac != 3) {
+		printf("Usage: master <module.bpf> <map_path>\n");
+		return -1;
+	}
+	
 	char filename[256];
 	
 	int sock;
@@ -39,8 +43,8 @@ int main (int ac, char **argv)
 			sizeof(prog_fd[0])) == 0);
 
 	/* Persisting map */
-	assert(bpf_obj_pin(map_fd[0],"/sys/fs/bpf/pc_map") == 0);
-	printf("MAP persisted to /sys/fs/bpf/pc_map\n");
+	assert(bpf_obj_pin(map_fd[0],argv[2]) == 0);
+	printf("MAP persisted to %s\n", argv[2]);
 	
 	// Pinging to localhost
 	FILE * f = popen("ping -c5 localhost", "r");
