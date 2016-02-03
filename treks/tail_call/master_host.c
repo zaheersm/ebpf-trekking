@@ -47,11 +47,11 @@ int main (int ac, char **argv)
 	(void) f;
 	
 	long icmp_cnt = 0;
-    char q;
-    while (q != 'q') {
-        printf("Enter 'q' to exit\n");
+	char q;
+	while (q != 'q') {
+	    printf("Enter 'q' to exit\n");
 		q = getchar();
-    }
+	}
 		
 	return 0;
 }
