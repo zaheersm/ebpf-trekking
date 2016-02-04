@@ -101,20 +101,21 @@ int ping_block_reply (struct __sk_buff * skb) {
 	return 1;
 } 
 """
-ipr = IPRoute();
-ipdb = IPDB(nl=ipr);
-ifc = ipdb.interfaces.eth0;
+ipr = IPRoute()
+ipdb = IPDB(nl=ipr)
+ifc = ipdb.interfaces.eth0
 
 b = BPF(text=prog)
-pbr = b.load_func("ping_block_reply", BPF.SCHED_CLS);
+pbr = b.load_func("ping_block_reply", BPF.SCHED_CLS)
 ipr.tc("add", "ingress", ifc.index, "ffff:")
 ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=pbr.fd,
-	name=pbr.name, parent="ffff:", action="drop", classid=1);
+	name=pbr.name, parent="ffff:", action="drop", classid=1)
 
 try:
 	print "All Ready..."
-	b.trace_print();
+	b.trace_print()
 except KeyboardInterrupt:
 	print "Ending Demo..."
 finally:
-	ipr.tc("del","ingress",ifc.index,"ffff:");	
+	ipr.tc("del","ingress",ifc.index,"ffff:")
+	ipdb.release()	
