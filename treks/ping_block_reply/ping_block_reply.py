@@ -1,13 +1,11 @@
 """
-Author: M. Zaheer (1st Jan, 2016)
-
 ping_block_reply.py
-	- Hooks at Traffic Control in Kernel using eBPF
-	- If packet is an ICMP echo (ping)
-		* Blocks the packet
-		* Modifies it to ICMP reply
-		* Swaps src/dst ip and mac and updates chksum
-		* Redirects packet to the same interface as egress
+    - Hooks at Traffic Control (ingress queue) in Kernel using eBPF
+    - If packet is an ICMP echo (ping)
+        * Intercepts the packet at traffic control ingress queue
+        * Modifies ICMP packet type to ICMP reply
+        * Swaps src/dst ip and mac and updates chksum
+        * Redirects packet to the same interface as egress
 """
 
 from bcc import BPF
