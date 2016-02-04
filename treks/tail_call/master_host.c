@@ -14,7 +14,7 @@
 int main (int ac, char **argv) 
 {
 	if (ac != 3) {
-		printf("Usage: master_host <module.bpf> <prog_path\n");
+		printf("Usage: master_host <module.bpf> <prog_path>\n");
 		return -1;
 	}
 	
