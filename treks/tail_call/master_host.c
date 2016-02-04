@@ -46,7 +46,6 @@ int main (int ac, char **argv)
 	FILE *f = popen("ping -c5 localhost", "r");
 	(void) f;
 	
-	long icmp_cnt = 0;
 	char q;
 	while (q != 'q') {
 	    printf("Enter 'q' to exit\n");
