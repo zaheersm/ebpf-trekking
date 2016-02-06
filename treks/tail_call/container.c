@@ -6,7 +6,7 @@
 SEC("socket1")
 int main_prog (struct __sk_buff * skb)
 {
-    char msg [] = "In container's module\n";
+    char msg [] = "In container's module\n\n";
     bpf_trace_printk(msg, sizeof(msg));
     return 0;
 }

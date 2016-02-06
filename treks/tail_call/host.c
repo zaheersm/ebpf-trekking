@@ -14,7 +14,7 @@ struct bpf_map_def SEC("maps") jmp_table = {
 SEC("socket1")
 int main_prog (struct __sk_buff * skb)
 {
-	char msg [] = "In host : Tail calling container\n";
+	char msg [] = "In host : Tail calling container";
 	bpf_trace_printk(msg, sizeof(msg));
 	bpf_tail_call(skb, &jmp_table, 0);
 	return 0;
