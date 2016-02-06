@@ -19,8 +19,8 @@ int main (int ac, char **argv)
 		return -1;
 	}
 	
-	printf("prog : %d\n" , prog_fd[0]);
-	printf("map: %d\n", map_fd[0]);	
+	//printf("prog : %d\n" , prog_fd[0]);
+	//printf("map: %d\n", map_fd[0]);	
 	assert(bpf_obj_pin(prog_fd[0], argv[2]) == 0);
 	assert(bpf_obj_pin(map_fd[0], argv[3]) == 0);
 	
