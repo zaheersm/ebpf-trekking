@@ -10,10 +10,11 @@
 
 6. gcc bpf/libbpf.c bpf/bpf_load.c -l elf demo.c -o d
 
-7. sudo ./pm /bpf/p1 /bpf/m1
-   sudo ./pm /bpf/p2 /bpf/m2
-   sudo ./pm /bpf/p3 /bpf/m3
-   sudo ./pm /bpf/p4 /bpf/m4
+7. 
+sudo ./pm module.bpf /bpf/p1 /bpf/m1; 
+sudo ./pm module.bpf /bpf/p2 /bpf/m2; 
+sudo ./pm module.bpf /bpf/p3 /bpf/m3; 
+sudo ./pm module.bpf /bpf/p4 /bpf/m4
 
 8. sudo ./c /bpf/p1 /bpf/m1 /bpf/p2 /bpf/m2 /bpf/p3 /bpf/m3 /bpf/p4 /bpf/m4
 
