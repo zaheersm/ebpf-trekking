@@ -8,7 +8,7 @@
 
 5. gcc bpf/libbpf.c bpf/bpf_load.c -l elf connect.c -o c
 
-6. gcc bpf/libbpc.c bpf/bpf_load.c -l elf demo.c -o d
+6. gcc bpf/libbpf.c bpf/bpf_load.c -l elf demo.c -o d
 
 7. sudo ./pm /bpf/p1 /bpf/m1
    sudo ./pm /bpf/p2 /bpf/m2
